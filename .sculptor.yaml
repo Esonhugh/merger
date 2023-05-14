@@ -1,4 +1,17 @@
 file:
+    "":
+        /test/mergetwomoredocument/oneforall_output:
+            csv_delimiter: ','
+            data:
+                domain: subdomain
+                source: source
+            type: csv
+        /test/mergetwomoredocument/subfinder_output:
+            csv_delimiter: ','
+            data:
+                domain: host
+                source: source
+            type: json
     test/mergetwomoredocument/oneforall_output:
         csv_delimiter: ','
         data:
@@ -12,7 +25,7 @@ file:
             source: source
         type: json
 output:
-    filename: out.datas
+    filename: out.data
     formatistext: false
     outputfield: ""
     structdefine: struct { Name   string `select:"domain"`; Source string `select:"source"`}
