@@ -68,7 +68,7 @@ var MergeCommand = &cobra.Command{
 			panic(err)
 		}
 		if !dryRun {
-			exec.Command("go", "run", "out.go").Start()
+			exec.Command("go", "run", "out.go").Run()
 		}
 	},
 

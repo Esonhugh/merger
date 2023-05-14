@@ -15,5 +15,7 @@ WORKDIR /
 COPY --from=builder /build/test/ /test/
 COPY --from=builder /build/init.sh /init.sh
 COPY --from=builder /build/doc_merger /doc_merger
+COPY --from=builder /build/go.mod /go.mod
+RUN go get github.com/esonhugh/sculptor
 
-CMD ["/init.sh"]
+CMD ["sh", "/init.sh"]
