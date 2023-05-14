@@ -2,13 +2,13 @@ file:
     test/mergetwomoredocument/oneforall_output:
         csv_delimiter: ','
         data:
-            domain: host
+            domain: subdomain
             source: source
         type: csv
     test/mergetwomoredocument/subfinder_output:
         csv_delimiter: ','
         data:
-          domain: subdomain
-          source: source
+            domain: host
+            source: source
         type: json
 used: true

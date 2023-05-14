@@ -12,8 +12,8 @@ file:
             source: source
         type: json
 output:
-    filename: out.data
+    filename: out.datas
     formatistext: false
     outputfield: ""
-    structdefine: struct { Name   string `select:"domain"`;Source string `select:"source"`}
+    structdefine: struct { Name   string `select:"domain"`; Source string `select:"source"`}
 used: true

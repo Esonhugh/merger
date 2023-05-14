@@ -5,6 +5,7 @@ import (
 	"merger/cmd"
 	template2 "merger/cmd/template"
 	"os"
+	"os/exec"
 	"text/template"
 )
 
@@ -12,6 +13,7 @@ var output string
 var outputFormatIsText bool
 var outputField string
 var StructDefine string
+var dryRun bool
 
 func init() {
 	MergeCommand.Flags().StringVarP(&output, "output", "o", "output.data", "output filename")
@@ -22,6 +24,8 @@ func init() {
 	MergeCommand.Flags().StringVarP(&StructDefine, "struct", "s", os.Getenv("STRUCT_DEFINE"),
 		"struct define like: \n"+
 			"(type output) struct { Name   string `select:\"domain\"`;Source string `select:\"source\"`}\n")
+
+	MergeCommand.Flags().BoolVarP(&dryRun, "dry", "d", false, "dry run. Only generate out.go file")
 	cmd.RootCommand.AddCommand(MergeCommand)
 }
 
@@ -62,6 +66,9 @@ var MergeCommand = &cobra.Command{
 		err = tx.Execute(file, s)
 		if err != nil {
 			panic(err)
+		}
+		if !dryRun {
+			exec.Command("go", "run", "out.go").Start()
 		}
 	},
 
