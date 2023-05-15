@@ -2,6 +2,7 @@ package process
 
 import (
 	"github.com/spf13/cobra"
+	"log"
 	"merger/cmd"
 	template2 "merger/cmd/template"
 	"os"
@@ -59,7 +60,6 @@ var MergeCommand = &cobra.Command{
 			},
 		}
 		file, err := os.OpenFile("out.go", os.O_CREATE|os.O_WRONLY, 0644)
-		defer file.Close()
 		if err != nil {
 			panic(err)
 		}
@@ -67,8 +67,14 @@ var MergeCommand = &cobra.Command{
 		if err != nil {
 			panic(err)
 		}
+		// force close file to save
+		file.Close()
+
 		if !dryRun {
+			log.Println("Run out.go")
 			exec.Command("go", "run", "out.go").Run()
+		} else {
+			log.Println("DryRun mod is setting.")
 		}
 	},
 

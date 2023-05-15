@@ -11,4 +11,9 @@ file:
             domain: host
             source: source
         type: json
+output:
+    filename: outdata
+    formatistext: true
+    outputfield: Name
+    structdefine: struct { Name   string `select:"domain"`;Source string `select:"source"`}
 used: true

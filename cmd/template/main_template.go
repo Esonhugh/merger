@@ -3,7 +3,11 @@ package template
 var MainTemplate = `package main
 
 import (
+	{{if .Output.IsText -}}
+	"fmt"
+	{{else}}
 	"encoding/json"
+	{{- end}}
 	"github.com/esonhugh/sculptor"
 	"os"
 	"sync"
