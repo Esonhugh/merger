@@ -25,7 +25,6 @@ func init() {
 	MergeCommand.Flags().StringVarP(&StructDefine, "struct", "s", os.Getenv("STRUCT_DEFINE"),
 		"struct define like: \n"+
 			"(type output) struct { Name   string `select:\"domain\"`;Source string `select:\"source\"`}\n")
-
 	MergeCommand.Flags().BoolVarP(&dryRun, "dry", "d", false, "dry run. Only generate out.go file")
 	cmd.RootCommand.AddCommand(MergeCommand)
 }
@@ -35,7 +34,14 @@ var InputFiles []InputFile
 var MergeCommand = &cobra.Command{
 	Use:   "merge",
 	Short: "merge is process your pre-add files",
-	PreRun: func(cmd *cobra.Command, args []string) {
+	PreRun: func(cmd1 *cobra.Command, args []string) {
+		if cmd.FromConfig != "" {
+			output = GlobalConfig.GetString("output.filename")
+			output = GlobalConfig.GetString("output.filename")
+			outputFormatIsText = GlobalConfig.GetBool("output.formatIsText")
+			StructDefine = GlobalConfig.GetString("output.structDefine")
+			outputField = GlobalConfig.GetString("output.outputField")
+		}
 		FileData := GlobalConfig.Sub("file")
 		if FileData == nil {
 			panic("Not defined file data")
