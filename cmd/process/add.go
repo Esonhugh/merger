@@ -4,6 +4,7 @@ import (
 	"github.com/spf13/cobra"
 	"merger/cmd"
 	"os"
+	"strings"
 )
 
 var document_type string
@@ -23,6 +24,9 @@ var AddCommand = &cobra.Command{
 	Long: "add is a tool for add one document with its processing. " +
 		"The args are ([tagValue for select] [query for this field]){.*}",
 	PreRun: func(cmd *cobra.Command, args []string) {
+		if len(strings.Split(filename, ".")) != 1 {
+			panic("invalid filename add. Check if your filename is set. And don't put char `.` in your filename.")
+		}
 		if len(args)%2 == 1 {
 			panic("args length must be even")
 		}
@@ -32,7 +36,9 @@ var AddCommand = &cobra.Command{
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		// Do Stuff Here
-		FileExist(filename)
+		if !FileExist(filename) {
+			panic("File " + filename + " not exist")
+		}
 		queryMap := make(map[string]string, 10)
 		// map Key (string)tagName  => (string)query
 		for i, v := range args {

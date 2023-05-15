@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 
+function demo () {
 ./doc_merger add -f /test/MergeTwoMoreDocument/oneforall_output -t csv  \
   domain subdomain \
   source source
@@ -13,3 +14,17 @@
   -d=false
 
 cat out.data
+}
+
+if [ -z "${EXEC_DOC_MERGE}" ]; then
+  echo "EXEC_DOC_MERGE is not set. Show the demo."
+  demo
+  exit 0
+fi
+cat > ./exec.sh << EOF
+#!/usr/bin/env sh
+${EXEC_DOC_MERGE}
+EOF
+
+chmod +x exec.sh
+sh -c ./exec.sh
